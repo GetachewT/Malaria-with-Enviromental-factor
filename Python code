@@ -1,0 +1,50 @@
+#Simulation of Climate based entomological model parameters
+import numpy as np
+import matplotlib.pyplot as plt
+import pandas as pd
+
+#def clim_B_para(T0, Tend,R0, Rend,f):#f=entomol_clim_parameters clim_B_para
+    #t0=12.5
+    #tend=30.5
+    #dt=0.001
+R0=1
+Rend=49.4
+T0=12.5
+Tend=35.32
+T=np.linspace(T0,Tend)
+R=np.linspace(R0, Rend)
+
+#clim_B_para = np.zeros(9)
+Tl= 1/(0.0554*T-0.06737) # mean duration of larva,u0=T
+P= (4*0.75/50**2)*R*(50-R)#survival of pupa
+L =np.e**(0.06737-0.0554*T)*(4*0.75/50**2)*R*(50-R)#survival of larva
+Bi =0.5*(T**(2) - T)*(np.sqrt(42.3-T))#mosquito biting rate
+Pa =(T-16)*(42-T)/(16+T)#pathogen_dev
+Be =0.0729*T-.9037#beta_T
+A = 0.002044*T*(T-16.286)*(33.461-T)**(1/2)#alpha_T
+D= (0.8692-.0159*T+0.1116*np.e-1*T**2)+3.408*10**(-5)*6**3*(T-28)+(T-28)*3.809*10**(-3)*T**4#death rate of adult mosquito
+H=2.32*10**2*25*T*(35.5-T)*(np.e**(0.273*T-0.024))/(1+T*np.e**0.72/T)#hatching success
+    #return clim_B_para
+
+T0=16.5
+Tend = 35.32
+R0=1
+Rend=49.4
+T=np.linspace(T0,Tend)
+R=np.linspace(R0, Rend)
+#R0,T0 = np.array([12.50, 1.0, 12.5,12.5,12.5,12.5,12.5,11.5,10.7])
+#Now, one can simulate and see the results by exchanging the parameters as shown below
+plt.subplot(2, 1, 1)  # 2 rows, 1 column, plot number 1
+plt.plot(T, P, 'g-*')
+plt.xlabel('Rainfall')
+plt.ylabel('survival rate of pupa ')
+plt.grid(True)
+#plt.legend(['R','G'])
+#plt.title(" survival rate of pupa ")
+# plt.savefig('survival rate of pupa.png')
+plt.subplot(2, 1, 2)  # 2 rows, 1 column, plot number 2
+plt.plot(T, H, 'b-o')
+plt.xlabel('Temperature (in degree celsies)')
+plt.ylabel('success of hatching')
+plt.tight_layout()  # make subplots fit figure area
+plt.show()
